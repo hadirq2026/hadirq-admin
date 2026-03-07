@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HadirQ Admin Dashboard</title>
+    <meta name="theme-color" content="#10b981">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #f0fdf4 100%);
+            color: #064e3b;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .iframe-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .iframe-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .spinner {
+            border: 3px solid rgba(16, 185, 129, 0.1);
+            border-top-color: #10b981;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        iframe {
+            width: 100%;
+            height: calc(100vh - 180px);
+            min-height: 600px;
+            border: none;
+            display: block;
+        }
+
+        .info-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #059669;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: #064e3b;
+            line-height: 1.6;
+        }
+
+        .info-box code {
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            iframe {
+                height: calc(100vh - 160px);
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#10b981">
+                    <path d="M19 3h-4V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                </svg>
+                HadirQ Admin
+            </h1>
+            <div class="header-actions">
+                <a href="#" id="teacher-link" class="btn btn-secondary" target="_blank">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4 4h6v6H4V4zm2 2v2h2V6H6zm8-2h6v6h-6V4zm2 2v2h2V6h-2zM4 14h6v6H4v-6zm2 2v2h2v-2H6zm10 0v2h2v-2h-2zm0-2h2v2h-2v-2zm-2 2h2v2h-2v-2zm0 2h2v2h-2v-2zM14 14h2v2h-2v-2zm4 4h2v2h-2v-2zm-2 2h2v2h-2v-2zm-4-4h2v2h-2v-2zm2 2h2v2h-2v-2z"/>
+                    </svg>
+                    Pindai QR Siswa
+                </a>
+                <button class="btn btn-primary" onclick="refreshIframe()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+        </div>
+
+        <div class="info-box" id="setup-info">
+            <h3>⚙️ Panduan Setup</h3>
+            <p>
+                <strong>Langkah 1:</strong> Deploy Code.gs sebagai Web App dengan akses "Anyone"<br>
+                <strong>Langkah 2:</strong> Copy URL Web App yang dihasilkan<br>
+                <strong>Langkah 3:</strong> Ganti <code>APPS_SCRIPT_URL</code> di bawah dengan URL tersebut<br>
+                <strong>Langkah 4:</strong> Ganti <code>TEACHER_DASHBOARD_URL</code> dengan URL halaman Teacher di Blogger
+            </p>
+        </div>
+
+        <div class="iframe-container">
+            <div class="iframe-loader" id="iframe-loader">
+                <div class="spinner"></div>
+                <p style="color: #6b7280; font-size: 14px;">Memuat Dashboard...</p>
+            </div>
+            <iframe id="admin-iframe" src="" onload="hideLoader()"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================================
+        // KONFIGURASI - WAJIB DIGANTI!
+        // ========================================================================
+        // Ganti dengan URL Web App dari Code.gs Anda (Admin Dashboard)
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqwkZcHJeK1nksyTOdtyyKEA6z8SBzOQI16zBxMi1mRi8_U421NS1maFUBXcaYErJqNw/exec';
+        
+        // Ganti dengan URL halaman Blogger untuk Teacher Dashboard
+        const TEACHER_DASHBOARD_URL = 'https://NAMA-BLOG-ANDA.blogspot.com/p/teacher-dashboard.html';
+        
+        // ========================================================================
+
+        // Load iframe on page load
+        window.onload = function() {
+            const iframe = document.getElementById('admin-iframe');
+            const teacherLink = document.getElementById('teacher-link');
+            
+            // Set Teacher Dashboard link
+            if (teacherLink) {
+                if (TEACHER_DASHBOARD_URL.includes('NAMA-BLOG-ANDA')) {
+                    teacherLink.href = '#';
+                    teacherLink.onclick = function(e) {
+                        e.preventDefault();
+                        alert('Silakan ganti TEACHER_DASHBOARD_URL dengan URL halaman Teacher Dashboard di Blogger Anda');
+                    };
+                } else {
+                    teacherLink.href = TEACHER_DASHBOARD_URL;
+                }
+            }
+            
+            if (APPS_SCRIPT_URL.includes('XXXXXXXX')) {
+                document.getElementById('setup-info').style.display = 'block';
+                document.getElementById('iframe-loader').innerHTML = `
+                    <div style="padding: 40px; text-align: center;">
+                        <h3 style="color: #ef4444; margin-bottom: 10px;">⚠️ Konfigurasi Diperlukan</h3>
+                        <p style="color: #6b7280;">Silakan ganti <code>APPS_SCRIPT_URL</code> dan <code>TEACHER_DASHBOARD_URL</code> dengan URL yang sesuai</p>
+                    </div>
+                `;
+            } else {
+                iframe.src = APPS_SCRIPT_URL;
+                document.getElementById('setup-info').style.display = 'none';
+            }
+        };
+
+        function hideLoader() {
+            const loader = document.getElementById('iframe-loader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
+        }
+
+        function refreshIframe() {
+            const iframe = document.getElementById('admin-iframe');
+            const loader = document.getElementById('iframe-loader');
+            
+            if (loader) loader.style.display = 'block';
+            
+            // Reload iframe
+            iframe.src = iframe.src;
+        }
+    </script>
+</body>
+</html>
