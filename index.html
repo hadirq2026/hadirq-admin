@@ -5055,7 +5055,7 @@
 
                 if (!scanner) scanner = new Html5Qrcode('reader');
 
-                var videoConfig = {
+                var videoConstraintsObj = {
                     facingMode: 'environment',
                     width: { ideal: 1280, min: 640 },
                     height: { ideal: 720, min: 480 }
@@ -5068,7 +5068,7 @@
                     return { width: qrboxSize, height: qrboxSize };
                 };
 
-                scanner.start(videoConfig, { fps: 15, qrbox: qrboxFunction }, onScan, function () { })
+                scanner.start({ facingMode: "environment" }, { fps: 15, qrbox: qrboxFunction, videoConstraints: videoConstraintsObj }, onScan, function () { })
                     .then(function () {
                         statusEl.textContent = 'Arahkan ke QR';
                         startBtn.disabled = true;
